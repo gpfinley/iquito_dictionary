@@ -1,0 +1,36 @@
+-	- =
+1	1
+2	2
+3	3
+4	4
+﻿A	A a á á Á
+B	b B
+C	c C
+Ch	Ch ch cH CH
+D	d D
+E	E É e é
+F	F f
+G	G g
+H	H h
+I	I i í Í í
+Ɨ	Ɨ Ɨ́ ɨ ɨ́   ɨ ɨ́
+J	J j
+K	K k
+L	L l
+Ll	LL Ll ll
+M	M m
+N	N n
+Ñ	Ñ ñ
+O	O Ó Ò o ó ò
+P	P p
+Q	Q q
+R	R r
+Rr	RR Rr rr
+S	S s
+T	T t
+U	U u ú
+V	V v
+W	W w
+X	X x
+Y	Y y
+Z	Z z
