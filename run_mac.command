@@ -1,3 +1,5 @@
+py=python2.7
 scriptdir=`dirname "$BASH_SOURCE"`
 cd "$scriptdir"
-python iquito_dictionary.py
+$py iquito_dictionary.py
+cd -

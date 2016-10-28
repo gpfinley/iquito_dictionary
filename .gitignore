@@ -1,2 +1,4 @@
 *.lift
-iquito dictionary.lift
+.*
+*_entries.tex
+intermediate_lexicon.xml

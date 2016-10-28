@@ -187,6 +187,31 @@ for entryNode in tree.iter("entry"):
     if activemiddle is not None:
         t.append( ('activemiddle', activemiddle.find(".//text").text.encode('utf-8') ) )
 
+
+
+    # Oct 2016 addition: RelatedForms
+    related_forms = [field for field in entryNode.findall('field') if "type" in field.attrib and 'RelatedForms' in field.attrib['type']]
+    related_iqu = []
+    related_es = []
+    related_en = []
+    for rf in related_forms:
+        for rff in rf.findall('form'):
+            if 'lang' in rff.attrib:
+                if rff.attrib['lang'] == 'iqu':
+                    related_iqu.append(rff.find('text').text.encode('utf-8'))
+                elif rff.attrib['lang'] == 'es':
+                    related_es.append(rff.find('text').text.encode('utf-8'))
+                elif rff.attrib['lang'] == 'en':
+                    related_en.append(rff.find('text').text.encode('utf-8'))
+
+    for rf in related_iqu:
+        t.append(('relatedFormIqu', rf))
+    for rf in related_es:
+        t.append(('relatedFormEs', rf))
+    for rf in related_en:
+        t.append(('relatedFormEn', rf))
+
+
     # (sense-level info:)
 
     for sense in entryNode.iter("sense"):
@@ -278,6 +303,29 @@ for entryNode in tree.iter("entry"):
             t.append(('engGramNote', engGramNote))
 
 
+        other_notes_en = ''
+        other_notes_es = ''
+        # Oct 2016: other notes
+        for note in sense.findall("./note[@type]"):
+            if note.attrib['type'] != 'grammar':
+                for form in note.findall('./form[@lang]'):
+                    if form.attrib['lang'] == 'en':
+                        if len(other_notes_en):
+                            other_notes_en += '; '
+                        other_notes_en += form.find('text').text.encode('utf-8')
+                    if form.attrib['lang'] == 'es':
+                        if len(other_notes_es):
+                            other_notes_es += '; '
+                        other_notes_es += form.find('text').text.encode('utf-8')
+
+        if len(other_notes_es):
+            t.append(('otherNotesEs', other_notes_es))
+        if len(other_notes_en):
+            t.append(('otherNotesEn', other_notes_en))
+
+
+
+
     # iterate for as many variants as necessary, but NOT raiz imperfecto:
     # contents of variant form field
     # contents of variant type field
@@ -287,6 +335,9 @@ for entryNode in tree.iter("entry"):
 
     # Contents of date modified field
     t.append(('dateModified', entryNode.attrib['dateModified']))
+
+    # Oct 2016 addition
+#    t = [(a, b.encode('utf-8')) for a,b in t]
 
     # Now add it to tupesById
     headword = citations[entryId]
